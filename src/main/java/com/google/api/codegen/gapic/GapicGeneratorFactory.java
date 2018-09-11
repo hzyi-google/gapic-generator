@@ -247,7 +247,7 @@ public class GapicGeneratorFactory {
       return generators;
 
     } else if (language.equals(NODEJS)) {
-      if (artifactFlags.surfaceGeneratorEnabled()) {
+      if (true) {
         GapicCodePathMapper nodeJSPathMapper = new NodeJSCodePathMapper();
         CodeGenerator mainGenerator =
             GapicGenerator.newBuilder()
