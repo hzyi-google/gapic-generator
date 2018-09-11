@@ -279,7 +279,7 @@ public class GapicGeneratorFactory {
         generators.add(metadataGenerator);
         generators.add(clientConfigGenerator);
 
-        if (artifactFlags.sampleGeneratorEnabled()) {
+        if (true) {
           CodeGenerator sampleGenerator =
               GapicGenerator.newBuilder()
                   .setModel(model)
