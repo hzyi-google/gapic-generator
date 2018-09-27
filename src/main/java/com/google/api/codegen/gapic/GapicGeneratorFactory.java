@@ -368,7 +368,7 @@ public class GapicGeneratorFactory {
                 .setModelToViewTransformer(new PhpPackageMetadataTransformer(packageConfig))
                 .build();
 
-        if (devSamples) {
+        if (true) {
           CodeGenerator sampleGenerator =
               GapicGenerator.newBuilder()
                   .setModel(model)
