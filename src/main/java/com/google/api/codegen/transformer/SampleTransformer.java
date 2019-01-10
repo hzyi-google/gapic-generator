@@ -27,6 +27,7 @@ import com.google.api.codegen.metacode.InitCodeContext.InitCodeOutputType;
 import com.google.api.codegen.util.Name;
 import com.google.api.codegen.viewmodel.ApiMethodView;
 import com.google.api.codegen.viewmodel.CallingForm;
+import com.google.api.codegen.viewmodel.ImportFileView;
 import com.google.api.codegen.viewmodel.InitCodeView;
 import com.google.api.codegen.viewmodel.MethodSampleView;
 import com.google.api.codegen.viewmodel.OutputView;
@@ -248,14 +249,17 @@ public class SampleTransformer {
                                       .sampleArgumentName(attr.getSampleArgumentName())
                                       .build())));
         }
-        InitCodeView initCodeView = sampleGenerator.generate(thisContext);
         List<OutputSpec> outputs = valueSet.getOnSuccessList();
         if (outputs.isEmpty()) {
           outputs = OutputTransformer.defaultOutputSpecs(methodContext.getMethodModel());
         }
-
         ImmutableList<OutputView> outputViews =
             outputTransformer.toViews(outputs, methodContext, valueSet);
+        ImmutableList<ImportFileView> outputImports =
+            outputTransformer
+                .getOutputImportTransformer()
+                .generateOutputImports(methodContext, outputViews);
+        InitCodeView initCodeView = sampleGenerator.generate(thisContext);
 
         methodSampleViews.add(
             MethodSampleView.newBuilder()
@@ -263,10 +267,7 @@ public class SampleTransformer {
                 .valueSet(SampleValueSetView.of(valueSet))
                 .initCode(initCodeView)
                 .outputs(outputViews)
-                .outputImports(
-                    outputTransformer
-                        .getOutputImportTransformer()
-                        .generateOutputImports(methodContext, outputViews))
+                .outputImports(outputImports)
                 .regionTag(
                     regionTagFromSpec(
                         setAndTag.regionTag(),

@@ -614,9 +614,10 @@ interfaces:
         defaults:
         - name=BASIC
       on_success:
+        - define: received_comment=$resp
         - print:
           - "The stage of the comment is: %s"
-          - $resp.stage
+          - received_comment.stage
     samples:
       in_code:
       - calling_forms: ".*"

@@ -60,6 +60,11 @@ public class StaticLangApiMethodTransformer {
       new HeaderRequestParamTransformer();
   private final SampleTransformer sampleTransformer;
 
+  public StaticLangApiMethodTransformer(
+      OutputTransformer outputTransformer, SampleType sampleType) {
+    this.sampleTransformer = new SampleTransformer(sampleType, outputTransformer);
+  }
+
   public StaticLangApiMethodTransformer(SampleType sampleType) {
     this.sampleTransformer = new SampleTransformer(sampleType);
   }
