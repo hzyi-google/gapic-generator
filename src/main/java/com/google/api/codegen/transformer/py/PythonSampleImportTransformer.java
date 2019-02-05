@@ -42,7 +42,12 @@ public class PythonSampleImportTransformer implements SampleImportTransformer {
   }
 
   private void addEnumImports(
-    MethodContext context, TypeModel type) {
-    
+    MethodContext context, OutputView.PrintView view) {
+    boolean shouldImportEnumType =
+        view
+            .args()
+            .stream()
+            .flatMap(arg -> arg.segments().stream())
+            .filter(seg -> seg.kind() == PrintArgView.ArgSegmentView.Kind.V)
   }
 }
