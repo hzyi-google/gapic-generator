@@ -12,42 +12,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.api.codegen.transformer.python;
+package com.google.api.codegen.transformer.py;
 
-import com.google.api.codegen.metacode.InitCodeNode;
-import com.google.api.codegen.viewmodel.CallingForm;
-import com.google.api.codegen.viewmodel.ImportSectionView;
+import com.google.api.codegen.transformer.MethodContext;
+import com.google.api.codegen.transformer.StandardSampleImportTransformer;
 import com.google.api.codegen.viewmodel.OutputView;
+import com.google.api.codegen.viewmodel.PrintArgView;
 import java.util.List;
 
 /** Generates an ImportSection for standalone samples. */
-public class PythonSampleImportTransformer implements SampleImportTransformer {
+public class PythonSampleImportTransformer extends StandardSampleImportTransformer {
 
-  
-  void addSampleBodyImports(MethodContext context, CallingForm form) {
-
+  public PythonSampleImportTransformer() {
+    super(new PythonImportSectionTransformer());
   }
 
-  void addOutputImports(MethodContext context, List<OutputView> views) {
-
+  // void addSampleBodyImports(MethodContext context, CallingForm form) {}
+  public void addOutputImports(MethodContext context, List<OutputView> views) {
+    for (OutputView view : views) {
+      if (view.kind() == OutputView.Kind.LOOP) {
+        addOutputImports(context, ((OutputView.LoopView) view).body());
+      }
+      if (view.kind() == OutputView.Kind.PRINT) {
+        addEnumImports(context, (OutputView.PrintView) view);
+      }
+    }
   }
 
-  void addInitCodeImports(
-      MethodContext context, ImportTypeTable initCodeTypeTable, Iterable<InitCodeNode> nodes) {
+  // void addInitCodeImports(
+  //     MethodContext context, ImportTypeTable initCodeTypeTable, Iterable<InitCodeNode> nodes) {}
 
-  }
+  // ImportSectionView generateImportSection(MethodContext context) {}
 
-  ImportSectionView generateImportSection(MethodContext context) {
-
-  }
-
-  private void addEnumImports(
-    MethodContext context, OutputView.PrintView view) {
+  private void addEnumImports(MethodContext context, OutputView.PrintView view) {
     boolean shouldImportEnumType =
-        view
-            .args()
+        view.args()
             .stream()
             .flatMap(arg -> arg.segments().stream())
-            .filter(seg -> seg.kind() == PrintArgView.ArgSegmentView.Kind.V)
+            .filter(seg -> seg.kind() == PrintArgView.ArgSegmentView.Kind.VARIABLE)
+            .map(seg -> ((PrintArgView.VariableSegmentView) seg).variable().type())
+            .anyMatch(type -> type != null && type.isEnum());
+    if (shouldImportEnumType) {
+      context
+          .getTypeTable()
+          .getAndSaveNicknameFor(context.getNamer().getVersionedDirectoryNamespace() + ".enums");
+    }
   }
 }

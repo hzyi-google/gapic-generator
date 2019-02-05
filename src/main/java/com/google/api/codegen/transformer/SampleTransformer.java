@@ -255,11 +255,6 @@ public abstract class SampleTransformer {
         .valueSet(SampleValueSetView.of(valueSet))
         .sampleInitCode(initCodeView)
         .outputs(outputViews)
-        .outputImports(
-            // TODO(hzyi): remove outputImports once we implement PythonSampleImportTransformer
-            outputTransformer()
-                .getOutputImportTransformer()
-                .generateOutputImports(methodContext, outputViews))
         .sampleImports(sampleImportSectionView)
         .regionTag(
             regionTagFromSpec(

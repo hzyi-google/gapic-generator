@@ -24,7 +24,10 @@
 
   @# [START {@sample.regionTag}]
 
-  {@importList(sample.sampleInitCode.importSection.appImports)}
+  @if sample.sampleImports.appImports.size
+    {@importList(sample.sampleImports.appImports)}
+
+  @end
   @if sample.outputImports.size
     {@importList(sample.outputImports)}
   @end
