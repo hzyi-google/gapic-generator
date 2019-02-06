@@ -91,6 +91,28 @@ public class PythonImportSectionTransformer implements ImportSectionTransformer 
         .build();
   }
 
+  ImportSectionView generateImportSection(ImportTypeTable typeTable) {
+    ImmutableList.Builder<ImportFileView> appImports = ImmutableList.builder();
+    System.out.println("size");
+    System.out.println(typeTable.getImports().size());
+    for (Map.Entry<String, TypeAlias> entry : typeTable.getImports().entrySet()) {
+      String key = entry.getKey();
+      System.out.println("key:");
+      System.out.println(key);
+      System.out.println("alias:");
+      TypeAlias alias = entry.getValue();
+      System.out.println(alias);
+      ImportTypeView imp =
+          ImportTypeView.newBuilder()
+              .fullName(key)
+              .nickname(alias.getNickname())
+              .type(alias.getImportType())
+              .build();
+      appImports.add(ImportFileView.newBuilder().types(ImmutableList.of(imp)).build());
+    }
+    return ImportSectionView.newBuilder().appImports(appImports.build()).build();
+  }
+
   private List<ImportFileView> generateGrpctransportExternalImports(GapicInterfaceContext context) {
     ImmutableList.Builder<ImportFileView> externalImports = ImmutableList.builder();
     externalImports.add(createImport("google.api_core.grpc_helpers"));

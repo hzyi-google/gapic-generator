@@ -16,6 +16,8 @@ package com.google.api.codegen.transformer.py;
 
 import com.google.api.codegen.transformer.MethodContext;
 import com.google.api.codegen.transformer.StandardSampleImportTransformer;
+import com.google.api.codegen.util.TypeAlias;
+import com.google.api.codegen.viewmodel.ImportSectionView;
 import com.google.api.codegen.viewmodel.OutputView;
 import com.google.api.codegen.viewmodel.PrintArgView;
 import java.util.List;
@@ -42,7 +44,10 @@ public class PythonSampleImportTransformer extends StandardSampleImportTransform
   // void addInitCodeImports(
   //     MethodContext context, ImportTypeTable initCodeTypeTable, Iterable<InitCodeNode> nodes) {}
 
-  // ImportSectionView generateImportSection(MethodContext context) {}
+  public ImportSectionView generateImportSection(MethodContext context) {
+    return ((PythonImportSectionTransformer) getImportSectionTransformer())
+        .generateImportSection(context.getTypeTable());
+  }
 
   private void addEnumImports(MethodContext context, OutputView.PrintView view) {
     boolean shouldImportEnumType =
@@ -55,7 +60,9 @@ public class PythonSampleImportTransformer extends StandardSampleImportTransform
     if (shouldImportEnumType) {
       context
           .getTypeTable()
-          .getAndSaveNicknameFor(context.getNamer().getVersionedDirectoryNamespace() + ".enums");
+          .getAndSaveNicknameFor(
+              TypeAlias.create(
+                  context.getNamer().getVersionedDirectoryNamespace(), "enums.Comment.Stage"));
     }
   }
 }

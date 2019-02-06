@@ -46,6 +46,10 @@ public class StandardSampleImportTransformer implements SampleImportTransformer 
         .forEach(t -> context.getTypeTable().getAndSaveNicknameFor(t));
   }
 
+  protected ImportSectionTransformer getImportSectionTransformer() {
+    return importSectionTransformer;
+  }
+
   public ImportSectionView generateImportSection(MethodContext context) {
     return importSectionTransformer.generateImportSection(
         context, Collections.<InitCodeNode>emptyList());
