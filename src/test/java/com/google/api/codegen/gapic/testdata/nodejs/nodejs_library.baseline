@@ -293,17 +293,10 @@ function sampleDiscussBook(imageFileName) {
 }
 
 require(`yargs`)
-<<<<<<< HEAD
   .default('image_file_name', 'image_file.jpg')
   .argv;
 
 sampleDiscussBook(argv.image_file_name);
-=======
-  .default('imageFileName', 'image_file.jpg')
-  .argv;
-
-sampleDiscussBook(argv.imageFileName);
->>>>>>> Samplegen: Node.js CLI (#2549)
 */
 // [END turing_prog_request_streaming_bidi_core]
 
@@ -553,17 +546,10 @@ function sampleGetBigBook(shelf, bigBookName) {
 
 require(`yargs`)
   .default('shelf', 'Novel')
-<<<<<<< HEAD
   .default('big_book_name', 'War and Peace')
   .argv;
 
 sampleGetBigBook(argv.shelf, argv.big_book_name);
-=======
-  .default('bigBookName', 'War and Peace')
-  .argv;
-
-sampleGetBigBook(argv.shelf, argv.bigBookName);
->>>>>>> Samplegen: Node.js CLI (#2549)
 */
 // [END hopper_core]
 
@@ -679,17 +665,10 @@ function sampleGetBigBook(shelf, bigBookName) {
 
 require(`yargs`)
   .default('shelf', 'Novel')
-<<<<<<< HEAD
   .default('big_book_name', 'War and Peace')
   .argv;
 
 sampleGetBigBook(argv.shelf, argv.big_book_name);
-=======
-  .default('bigBookName', 'War and Peace')
-  .argv;
-
-sampleGetBigBook(argv.shelf, argv.bigBookName);
->>>>>>> Samplegen: Node.js CLI (#2549)
 */
 // [END hopper_core]
 
@@ -809,19 +788,11 @@ function samplePublishSeries(shelfName, edition) {
 }
 
 require(`yargs`)
-<<<<<<< HEAD
   .default('shelf_name', 'Math')
   .default('edition', 123)
   .argv;
 
 samplePublishSeries(argv.shelf_name, argv.edition);
-=======
-  .default('shelfName', 'Math')
-  .default('edition', 123)
-  .argv;
-
-samplePublishSeries(argv.shelfName, argv.edition);
->>>>>>> Samplegen: Node.js CLI (#2549)
 */
 // [END canonical_core]
 
